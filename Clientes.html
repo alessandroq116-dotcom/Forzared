@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORZARED - Clientes</title>
+    <style>
+        /* --- ESTILOS GENERALES Y FUENTE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #111;
+            color: white;
+            padding-top: 110px; /* Espacio para que no se oculte tras el menú fijo */
+            background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), url('Constru5.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- 1. HEADER FIJO ESTRUCTURAL --- */
+        header {
+            position: fixed;   
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;    
+        }
+
+        /* Marquesina Ajustada Limpia */
+        .marquesina {
+            background-color: #ffe603; 
+            color: black;              
+            padding: 8px 0;
+            font-weight: bold;
+            font-size: 0.95rem;
+            overflow: hidden;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .marquesina p {
+            display: inline-block;
+            padding-left: 100%;
+            animation: movimiento 20s linear infinite;
+            margin: 0;
+        }
+
+        @keyframes movimiento {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+
+        /* Menú Horizontal */
+        nav {
+            background-color: rgba(0, 0, 0, 0.95); 
+            display: flex;
+            justify-content: center;
+            border-bottom: 3px solid #ffe603; 
+            backdrop-filter: blur(5px); 
+        }
+
+        /* Señal visual para la página activa */
+        .menu-item.actual .botones-redireccionales {
+            color: #ffe603; /* El texto se vuelve amarillo fijo */
+            text-decoration: underline; /* Le pone una línea abajo al texto */
+            text-underline-offset: 5px; /* Separa la línea del texto para que se vea limpio */
+        }
+
+        .menu-principal {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu-item {  
+            position: relative;
+            border-right: 1px solid rgba(255, 230, 3, 0.2);
+            transition: background 0.3s;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .menu-item:first-child {
+            border-left: 1px solid rgba(255, 230, 3, 0.2);
+        }
+
+        .botones-redireccionales {
+            display: block;
+            width: 100%;
+            padding: 18px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .menu-item:hover {
+            background-color: #ffe603; 
+        }
+
+        .menu-item:hover .botones-redireccionales {
+            color: black; 
+        }
+
+        /* --- 2. SECCIÓN DE CLIENTES --- */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .seccion-clientes h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 45px;
+            border-left: 8px solid #ffe603;
+            padding-left: 15px;
+        }
+
+        /* Contenedor Grid Balanceado para 6 Elementos */
+        .contenedor-clientes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            padding-bottom: 60px;
+        }
+
+        /* Tarjeta de Cliente (Estilo Industrial Limpio) */
+        .cliente-tarjeta {
+            background-color: #ffcc02;
+            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, border-color 0.3s;
+            border-bottom: 4px solid #333;
+        }
+
+        .cliente-tarjeta:hover {
+            transform: translateY(-8px);
+            border-bottom-color: #ffe603;
+        }
+
+        /* Bloque Superior: Icono y Nombre */
+        .cliente-cabecera {
+            padding: 25px 25px 15px 25px;
+            position: relative;
+        }
+
+        /* Icono Decorativo Comercial (Comillas gigantes) */
+        .cliente-icono {
+            font-size: 3.5rem;
+            color: rgba(0, 0, 0, 0.3);
+            line-height: 1;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-family: Georgia, serif;
+            font-weight: bold;
+        }
+
+        .cliente-nombre {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #111111;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            max-width: 80%;
+        }
+
+        .cliente-proyecto {
+            font-size: 0.95rem;
+            color: #555555;
+            line-height: 1.5;
+            text-align: justify;
+        }
+
+        /* Bloque Inferior: Foto del Proyecto de Obra */
+        .cliente-foto {
+            width: 100%;
+            height: 200px;
+            background-color: #222;
+            overflow: hidden;
+            border-top: 1px solid #ffcc02;
+        }
+
+        .cliente-foto img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ajusta la foto para que llene todo el espacio sin deformarse */
+            transition: transform 0.5s ease;
+        }
+
+        .cliente-tarjeta:hover .cliente-foto img {
+            transform: scale(1.05); /* Efecto zoom suave en la foto al pasar el mouse */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="marquesina">
+            <p>0901-26-18806 &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp; Diego Alessandro Quiñónez Pangán</p>
+        </div>
+
+        <nav>
+            <ul class="menu-principal">
+                <li class="menu-item">
+                    <a href="index.html" class="botones-redireccionales">Menú principal</a>
+                </li>
+                <li class="menu-item">
+                    <a href="QuienesSomos.html" class="botones-redireccionales">¿Quiénes Somos?</a>
+                </li>
+                <li class="menu-item">
+                    <a href="AcercaDe.html" class="botones-redireccionales">Acerca De</a>
+                </li>
+                <li class="menu-item">
+                    <a href="Producos.html" class="botones-redireccionales">Productos</a>
+                </li>
+                <li class="menu-item">
+                    <a href="Proveedores.html" class="botones-redireccionales">Proveedores</a>
+                </li>
+                <li class="menu-item actual">
+                    <a href="Clientes.html" class="botones-redireccionales">Clientes</a>
+                </li>
+                <li class="menu-item">
+                    <a href="Contactenos.html" class="botones-redireccionales">Contáctenos</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="seccion-clientes">
+            <h2>Proyectos de Nuestros Clientes</h2>
+            
+            <div class="contenedor-clientes">
+                
+                <article class="cliente-tarjeta">
+                    <div class="cliente-cabecera">
+                        <div class="cliente-icono">“</div>
+                        <h3 class="cliente-nombre">Constructora Delta</h3>
+                        <p class="cliente-proyecto">Abastecimiento integral de acero corrugado grado 40 y cemento estructural para el desarrollo de complejos residenciales.</p>
+                    </div>
+                    <figure class="cliente-foto">
+                        <img src="C1.jpg" alt="Obra de Constructora Delta">
+                    </figure>
+                </article>
+
+                <article class="cliente-tarjeta">
+                    <div class="cliente-cabecera">
+                        <div class="cliente-icono">“</div>
+                        <h3 class="cliente-nombre">Inversiones Alfa</h3>
+                        <p class="cliente-proyecto">Distribución de block pómez de alta resistencia y aditivos impermeabilizantes para la edificación de bodegas logísticas industriales.</p>
+                    </div>
+                    <figure class="cliente-foto">
+                        <img src="C2.jpg" alt="Obra de Inversiones Alfa">
+                    </figure>
+                </article>
+
+                <article class="cliente-tarjeta">
+                    <div class="cliente-cabecera">
+                        <div class="cliente-icono">“</div>
+                        <h3 class="cliente-nombre">Ingeniería Vial G&T</h3>
+                        <p class="cliente-proyecto">Suministro masivo de tuberías de presión PVC y materiales aglomerantes base para la infraestructura hidráulica municipal.</p>
+                    </div>
+                    <figure class="cliente-foto">
+                        <img src="C3.jpg" alt="Obra de Ingeniería Vial G&T">
+                    </figure>
+                </article>
+
+                <article class="cliente-tarjeta">
+                    <div class="cliente-cabecera">
+                        <div class="cliente-icono">“</div>
+                        <h3 class="cliente-nombre">Desarrollos Urbanos</h3>
+                        <p class="cliente-proyecto">Adquisición por volumen de láminas de aluzinc legítimas y perfiles estructurales para la techumbre de naves de almacenamiento.</p>
+                    </div>
+                    <figure class="cliente-foto">
+                        <img src="C4.jpg" alt="Obra de Desarrollos Urbanos">
+                    </figure>
+                </article>
+
+                <article class="cliente-tarjeta">
+                    <div class="cliente-cabecera">
+                        <div class="cliente-icono">“</div>
+                        <h3 class="cliente-nombre">Ardisa Acabados</h3>
+                        <p class="cliente-proyecto">Logística de transporte y entrega de porcelanatos rectificados de alto tráfico y pisos cerámicos para centros comerciales.</p>
+                    </div>
+                    <figure class="cliente-foto">
+                        <img src="C5.jpg" alt="Obra de Ardisa Acabados">
+                    </figure>
+                </article>
+
+                <article class="cliente-tarjeta">
+                    <div class="cliente-cabecera">
+                        <div class="cliente-icono">“</div>
+                        <h3 class="cliente-nombre">Contratistas Unidos</h3>
+                        <p class="cliente-proyecto">Provisión constante de alambre de amarre negro calibre 16 y cal hidratada por quintales para cimentaciones pesadas.</p>
+                    </div>
+                    <figure class="cliente-foto">
+                        <img src="C6.jpg" alt="Obra de Contratistas Unidos">
+                    </figure>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

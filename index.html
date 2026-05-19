@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORZARED - Menú Principal</title>
+    <style>
+        /* --- ESTILOS GENERALES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #111;
+            color: white;
+            padding-top: 110px; /* Evita que el contenido se oculte tras el header fijo */
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)), url('Best-Building-Materials-Manufacturers.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- 1. HEADER FIJO ESTRUCTURAL --- */
+        header {
+            position: fixed;   
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;    
+        }
+
+        /* Marquesina Limpia (Solo tus datos solicitados) */
+        .marquesina {
+            background-color: #ffe603; 
+            color: black;              
+            padding: 8px 0;
+            font-weight: bold;
+            font-size: 0.95rem;
+            overflow: hidden;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .marquesina p {
+            display: inline-block;
+            padding-left: 100%;
+            animation: movimiento 20s linear infinite;
+            margin: 0;
+        }
+
+        @keyframes movimiento {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+
+        /* Menú Horizontal */
+        nav {
+            background-color: rgba(0, 0, 0, 0.95); 
+            display: flex;
+            justify-content: center;
+            border-bottom: 3px solid #ffe603; 
+            backdrop-filter: blur(5px); 
+        }
+
+        /* Señal visual para la página activa */
+        .menu-item.actual .botones-redireccionales {
+            color: #ffe603; /* El texto se vuelve amarillo fijo */
+            text-decoration: underline; /* Le pone una línea abajo al texto */
+            text-underline-offset: 5px; /* Separa la línea del texto para que se vea limpio */
+        }
+
+        .menu-principal {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu-item {  
+            position: relative;
+            border-right: 1px solid rgba(255, 230, 3, 0.2);
+            transition: background 0.3s;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .menu-item:first-child {
+            border-left: 1px solid rgba(255, 230, 3, 0.2);
+        }
+
+        .botones-redireccionales {
+            display: block;
+            width: 100%;
+            padding: 18px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .menu-item:hover {
+            background-color: #ffe603; 
+        }
+
+        .menu-item:hover .botones-redireccionales {
+            color: black; 
+        }
+
+        /* --- 2. CONTENIDO PRINCIPAL --- */
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Bloque de Presentación de la Empresa */
+        .presentacion-empresa {
+            background-color: rgba(0, 0, 0, 0.75);
+            border-left: 5px solid #ffe603;
+            padding: 35px;
+            margin-bottom: 40px;
+            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .presentacion-empresa h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            letter-spacing: -1px;
+            margin-bottom: 15px;
+        }
+
+        .tagline {
+            background-color: #ffe603;
+            color: black;
+            display: inline-block;
+            padding: 6px 15px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .presentacion-empresa p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #dddddd;
+            text-align: justify;
+        }
+
+        /* --- NUEVA SECCIÓN DE VIDEO --- */
+        .seccion-video {
+            background-color: rgba(0, 0, 0, 0.75);
+            padding: 30px;
+            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            margin-bottom: 60px;
+        }
+
+        .seccion-video h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ffe603;
+            padding-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Contenedor responsivo para el reproductor de vídeo (proporción 16:9) */
+        .contenedor-reproductor {
+            position: relative;
+            padding-bottom: 56.25%; /* Ratio 16:9 */
+            height: 0;
+            overflow: hidden;
+            border: 3px solid #333;
+            background-color: #000;
+        }
+
+        .contenedor-reproductor iframe,
+        .contenedor-reproductor video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- 3. PIE DE PÁGINA PROFESIONAL (FOOTER) --- */
+        footer {
+            background-color: rgba(0, 0, 0, 0.95);
+            border-top: 3px solid #ffe603;
+            color: #aaaaaa;
+            padding: 40px 20px;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        .contenido-footer {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .bloque-footer {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .bloque-footer h3 {
+            color: white;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .lema-umg {
+            font-style: italic;
+            color: #ffe603;
+            font-weight: bold;
+            line-height: 1.5;
+            margin-top: 5px;
+        }
+
+        /* Enlaces de Redes Sociales */
+        .redes-sociales {
+            list-style: none;
+            padding: 0;
+        }
+
+        .redes-sociales li {
+            margin-bottom: 10px;
+        }
+
+        .redes-sociales a {
+            color: #dddddd;
+            text-decoration: none;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .redes-sociales a:hover {
+            color: #ffe603;
+        }
+
+        .flecha-red {
+            color: #ffe603;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        .derechos-autor {
+            text-align: center;
+            max-width: 1200px;
+            margin: 30px auto 0 auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.85rem;
+            color: #666666;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="marquesina">
+            <p>0901-26-18806 &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp; Diego Alessandro Quiñónez Pangán</p>
+        </div>
+
+        <nav>
+            <ul class="menu-principal">
+                <li class="menu-item actual">
+                    <a href="index.html" class="botones-redireccionales">Menú principal</a>
+                </li>
+                <li class="menu-item">
+                    <a href="QuienesSomos.html" class="botones-redireccionales">¿Quiénes Somos?</a>
+                </li>
+                <li class="menu-item">
+                    <a href="AcercaDe.html" class="botones-redireccionales">Acerca De</a>
+                </li>
+                <li class="menu-item">
+                    <a href="Producos.html" class="botones-redireccionales">Productos</a>
+                </li>
+                <li class="menu-item">
+                    <a href="Proveedores.html" class="botones-redireccionales">Proveedores</a>
+                </li>
+                <li class="menu-item">
+                    <a href="Clientes.html" class="botones-redireccionales">Clientes</a>
+                </li>
+                <li class="menu-item">
+                    <a href="Contactenos.html" class="botones-redireccionales">Contáctenos</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        
+        <section class="presentacion-empresa">
+            <h1>FORZARED</h1>
+            <div class="tagline">Materiales fuertes. Obras sólidas.</div>
+            <p>
+                En Forzared creemos que la fuerza de una construcción comienza con la calidad de sus materiales. Por eso trabajamos con proveedores certificados y mantenemos estándares rigurosos de control de calidad, logística eficiente y atención personalizada. Comprometidos con el desarrollo de obras seguras y duraderas en toda la región.
+            </p>
+        </section>
+
+        <section class="seccion-video">
+            <h2>Nuestros Procesos y Fuerza Industrial</h2>
+                <div class="contenedor-reproductor">
+                    <video controls poster="miniatura-video.jpg">
+                        <source src="FORZARED.mp4" type="video/mp4">
+                        Tu navegador no soporta la reproducción de video HTML5.
+                    </video>
+                </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="contenido-footer">
+            
+            <div class="bloque-footer">
+                <h3>FORZARED</h3>
+                <p>Soluciones integrales en distribución e infraestructura de materiales pesados para la construcción civil y residencial.</p>
+            </div>
+
+            <div class="bloque-footer">
+                <h3>Filosofía Institucional</h3>
+                <p>Proyecto académico desarrollado bajo los valores de excelencia de la UMG:</p>
+                <p class="lema-umg">"Y conoceréis la verdad, y la verdad os hará libres."</p>
+            </div>
+
+            <div class="bloque-footer">
+                <h3>Redes Sociales</h3>
+                <ul class="redes-sociales">
+                    <li><a href="https://www.facebook.com/u.marianogalvez" target="_blank"><span class="flecha-red">▶</span> Facebook / UMG</a></li>
+                    <li><a href="https://www.instagram.com/marianogalvez" target="_blank"><span class="flecha-red">▶</span> Instagram @marianogalvez</a></li>
+                    <li><a href="https://es.linkedin.com/school/universidad-mariano-g-lvez-de-guatemala/" target="_blank"><span class="flecha-red">▶</span> LinkedIn / Universidad Mariano Gálvez</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="derechos-autor">
+            &copy; 2026 FORZARED. Todos los derechos reservados. Desarrollo Técnico por Diego Alessandro Quiñónez.
+        </div>
+    </footer>
+
+</body>
+</html>

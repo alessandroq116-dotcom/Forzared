@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORZARED - Productos</title>
+    <style>
+        /* --- ESTILOS GENERALES Y FUENTE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #111;
+            color: white;
+            /* Compensación para que el contenido no se esconda detrás del header fijo */
+            padding-top: 110px; 
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('Constru3.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+
+        /* --- 1. HEADER FIJO ESTRUCTURAL --- */
+        header {
+            position: fixed;   
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;    
+        }
+
+        /* Marquesina Superior */
+        .marquesina {
+            background-color: #ffe603; 
+            color: black;              
+            padding: 8px 0;
+            font-weight: bold;
+            font-size: 0.95rem;
+            overflow: hidden;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .marquesina p {
+            display: inline-block;
+            padding-left: 100%;
+            animation: movimiento 20s linear infinite;
+            margin: 0;
+        }
+
+        @keyframes movimiento {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+
+        /* Menú Horizontal */
+        nav {
+            background-color: rgba(0, 0, 0, 0.95); 
+            display: flex;
+            justify-content: center;
+            border-bottom: 3px solid #ffe603; 
+            backdrop-filter: blur(5px); 
+        }
+
+        /* Señal visual para la página activa */
+        .menu-item.actual .botones-redireccionales {
+            color: #ffe603; /* El texto se vuelve amarillo fijo */
+            text-decoration: underline; /* Le pone una línea abajo al texto */
+            text-underline-offset: 5px; /* Separa la línea del texto para que se vea limpio */
+        }
+
+        .menu-principal {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu-item {  
+            position: relative;
+            border-right: 1px solid rgba(255, 230, 3, 0.2);
+            transition: background 0.3s;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .menu-item:first-child {
+            border-left: 1px solid rgba(255, 230, 3, 0.2);
+        }
+
+        .botones-redireccionales {
+            display: block;
+            width: 100%;
+            padding: 18px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            background-color: #ffe603; 
+        }
+
+        .menu-item:hover .botones-redireccionales {
+            color: black; 
+        }
+
+        /* --- 2. SECCIÓN DE PRODUCTOS --- */
+        .productos-destacados {
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .productos-destacados h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 30px;
+            border-left: 8px solid #ffe603;
+            padding-left: 15px;
+        }
+
+        /* Grid balanceado para controlar las filas simétricamente con el scroll */
+        .contenedor-productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding-bottom: 60px;
+        }
+
+        /* --- TARJETA DE PRODUCTO BLANCA --- */
+        .producto-tarjeta {
+            background-color: #000000;
+            border-radius: 4px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            position: relative; 
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding-bottom: 25px;
+            border-bottom: 4px solid #ffd500;
+        }
+
+        .producto-tarjeta:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(255, 230, 3, 0.2);
+        }
+
+
+        /* Contenedor de la Imagen */
+        .producto-imagen {
+            margin: 0 0 15px 0;
+            background-color: #f4f4f4; 
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 220px; 
+            overflow: hidden;
+        }
+
+        .producto-imagen img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain; 
+        }
+
+        /* Información del Producto */
+        .producto-info {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .producto-titulo {
+            font-size: 0.95rem;
+            color: #ffffff;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+            min-height: 44px; /* Evita desalineación por textos de diferentes largos */
+            line-height: 1.4;
+            text-transform: uppercase;
+        }
+
+        /* Precios de estilo comercial */
+        .precio-anterior {
+            font-size: 0.9rem;
+            color: #888888;
+            text-decoration: line-through; 
+            margin: 0 0 4px 0;
+        }
+
+        .precio-actual {
+            font-size: 1.5rem;
+            color: #ffffff; 
+            font-weight: 900;
+            margin: 0 0 15px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="marquesina">
+            <p>0901-26-18806 &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp; Diego Alessandro Quiñónez Pangán </p>
+        </div>
+
+        <nav>
+            <ul class="menu-principal">
+                <li class="menu-item">
+                    <a href="index.html" class="botones-redireccionales">Menú principal</a>
+                </li>
+                <li class="menu-item">
+                    <a href="QuienesSomos.html" class="botones-redireccionales">¿Quiénes Somos?</a>
+                </li>
+                <li class="menu-item">
+                    <a href="AcercaDe.html" class="botones-redireccionales">Acerca De</a>
+                </li>
+                <li class="menu-item actual">
+                    <a href="Producos.html" class="botones-redireccionales">Productos</a>
+                </li>
+                <li class="menu-item">
+                    <a href="Proveedores.html" class="botones-redireccionales">Proveedores</a>
+                </li>
+                <li class="menu-item">
+                    <a href="Clientes.html" class="botones-redireccionales">Clientes</a>
+                </li>
+                <li class="menu-item">
+                    <a href="Contactenos.html" class="botones-redireccionales">Contáctenos</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="productos-destacados">
+            <h2>Productos Destacados</h2>
+            
+            <div class="contenedor-productos">
+                
+                <article class="producto-tarjeta">
+                    <figure class="producto-imagen">
+                        <img src="Product1.jpg" alt="Piso Cosala Haya 35.7x35.7cm Caja">
+                    </figure>
+                    <div class="producto-info">
+                        <h3 class="producto-titulo">Piso Cosala Haya 35.7x35.7cm Caja</h3>
+                        <p class="precio-anterior">Q 115.70</p>
+                        <p class="precio-actual">Q 97.90</p>
+                    </div>
+                </article>
+
+                <article class="producto-tarjeta">
+                    <figure class="producto-imagen">
+                        <img src="Product2.jpg" alt="Impermeabilizante Siliconizer Blanco Cubeta Lanco">
+                    </figure>
+                    <div class="producto-info">
+                        <h3 class="producto-titulo">Impermeabilizante Siliconizer Blanco Cubeta Lanco</h3>
+                        <p class="precio-anterior">Q 1,199.00</p>
+                        <p class="precio-actual">Q 749.00</p>
+                    </div>
+                </article>
+
+                <article class="producto-tarjeta">
+                    <figure class="producto-imagen">
+                        <img src="Product3.jpg" alt="Cemento UGC Fuerte Tipo Estructural Saco">
+                    </figure>
+                    <div class="producto-info">
+                        <h3 class="producto-titulo">Cemento UGC Fuerte Tipo Estructural Saco 40KG</h3>
+                        <p class="precio-anterior">Q 110.00</p>
+                        <p class="precio-actual">Q 89.50</p>
+                    </div>
+                </article>
+
+                <article class="producto-tarjeta">
+                    <figure class="producto-imagen">
+                        <img src="Product4.jpg" alt="Varilla de Hierro Legítimo 3/8 Grado 40">
+                    </figure>
+                    <div class="producto-info">
+                        <h3 class="producto-titulo">Varilla de Hierro Legítimo 3/8 Corrugado Grado 40</h3>
+                        <p class="precio-anterior">Q 45.00</p>
+                        <p class="precio-actual">Q 38.25</p>
+                    </div>
+                </article>
+
+                <article class="producto-tarjeta">
+                    <figure class="producto-imagen">
+                        <img src="Product5.jpg" alt="Block Pómez de Alta Resistencia 15x20x40cm">
+                    </figure>
+                    <div class="producto-info">
+                        <h3 class="producto-titulo">Block Pómez de Alta Resistencia 15x20x40cm Unidad</h3>
+                        <p class="precio-anterior">Q 7.50</p>
+                        <p class="precio-actual">Q 5.90</p>
+                    </div>
+                </article>
+
+                <article class="producto-tarjeta">
+                    <figure class="producto-imagen">
+                        <img src="Product6.jpg" alt="Lámina de Aluzinc Legítima Calibre 26 Troquelada">
+                    </figure>
+                    <div class="producto-info">
+                        <h3 class="producto-titulo">Lámina de Aluzinc Calibre 26 Troquelada de 10 Pies</h3>
+                        <p class="precio-anterior">Q 185.00</p>
+                        <p class="precio-actual">Q 159.00</p>
+                    </div>
+                </article>
+
+                <article class="producto-tarjeta">
+                    <figure class="producto-imagen">
+                        <img src="Product7.jpg" alt="Cal Hidratada Horcalsa Saco">
+                    </figure>
+                    <div class="producto-info">
+                        <h3 class="producto-titulo">Cal Hidratada de Alta Pureza Saco de 20KG</h3>
+                        <p class="precio-anterior">Q 42.00</p>
+                        <p class="precio-actual">Q 34.00</p>
+                    </div>
+                </article>
+
+                <article class="producto-tarjeta">
+                    <figure class="producto-imagen">
+                        <img src="P8.jpg" alt="Tubo PVC Presión 1/2 Pulgada de 6 Metros">
+                    </figure>
+                    <div class="producto-info">
+                        <h3 class="producto-titulo">Tubo PVC Presión 1/2 Pulgada 315 PSI 6 Metros</h3>
+                        <p class="precio-anterior">Q 38.00</p>
+                        <p class="precio-actual">Q 29.90</p>
+                    </div>
+                </article>
+
+                <article class="producto-tarjeta">
+                    <figure class="producto-imagen">
+                        <img src="p9.jpg" alt="Porcelanato Gris Grava 60x60cm Caja">
+                    </figure>
+                    <div class="producto-info">
+                        <h3 class="producto-titulo">Porcelanato Rectificado Gris Grava 60x60cm Caja</h3>
+                        <p class="precio-anterior">Q 245.00</p>
+                        <p class="precio-actual">Q 199.00</p>
+                    </div>
+                </article>
+
+                <article class="producto-tarjeta">
+                    <figure class="producto-imagen">
+                        <img src="p10.jpg" alt="Alambre de Amarre Calibre 16 Quintal">
+                    </figure>
+                    <div class="producto-info">
+                        <h3 class="producto-titulo">Alambre de Amarre Negro Calibre 16 por Quintal</h3>
+                        <p class="precio-anterior">Q 680.00</p>
+                        <p class="precio-actual">Q 595.00</p>
+                    </div>
+                </article>
+
+                <article class="producto-tarjeta">
+                    <figure class="producto-imagen">
+                        <img src="p11.jpg" alt="costal de arena">
+                    </figure>
+                    <div class="producto-info">
+                        <h3 class="producto-titulo">Costal de arena</h3>
+                        <p class="precio-anterior">Q 50.00</p>
+                        <p class="precio-actual">Q 39.00</p>
+                    </div>
+                </article>
+
+                <article class="producto-tarjeta">
+                    <figure class="producto-imagen">
+                        <img src="p12.jpg" alt="Piedrin 3/8">
+                    </figure>
+                    <div class="producto-info">
+                        <h3 class="producto-titulo">Piedrin 3/8</h3>
+                        <p class="precio-anterior">Q 75.00</p>
+                        <p class="precio-actual">Q 59.00</p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

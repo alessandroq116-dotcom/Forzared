@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORZARED - Proveedores</title>
+    <style>
+        /* --- ESTILOS GENERALES Y FUENTE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #111;
+            color: white;
+            padding-top: 110px; /* Espacio para que no se tape con el menú fijo */
+            background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)), url('Best-Building-Materials-Manufacturers.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- 1. HEADER FIJO ESTRUCTURAL --- */
+        header {
+            position: fixed;   
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;    
+        }
+
+        /* Marquesina Ajustada */
+        .marquesina {
+            background-color: #ffe603; 
+            color: black;              
+            padding: 8px 0;
+            font-weight: bold;
+            font-size: 0.95rem;
+            overflow: hidden;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .marquesina p {
+            display: inline-block;
+            padding-left: 100%;
+            animation: movimiento 20s linear infinite;
+            margin: 0;
+        }
+
+        @keyframes movimiento {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+
+        /* Menú Horizontal */
+        nav {
+            background-color: rgba(0, 0, 0, 0.95); 
+            display: flex;
+            justify-content: center;
+            border-bottom: 3px solid #ffe603; 
+            backdrop-filter: blur(5px); 
+        }
+
+        /* Señal visual para la página activa */
+        .menu-item.actual .botones-redireccionales {
+            color: #ffe603; /* El texto se vuelve amarillo fijo */
+            text-decoration: underline; /* Le pone una línea abajo al texto */
+            text-underline-offset: 5px; /* Separa la línea del texto para que se vea limpio */
+        }
+
+        .menu-principal {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu-item {  
+            position: relative;
+            border-right: 1px solid rgba(255, 230, 3, 0.2);
+            transition: background 0.3s;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .menu-item:first-child {
+            border-left: 1px solid rgba(255, 230, 3, 0.2);
+        }
+
+        .botones-redireccionales {
+            display: block;
+            width: 100%;
+            padding: 18px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .menu-item:hover {
+            background-color: #ffe603; 
+        }
+
+        .menu-item:hover .botones-redireccionales {
+            color: black; 
+        }
+
+        /* --- 2. SECCIÓN DE PROVEEDORES --- */
+        main {
+            flex: 1;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .seccion-proveedores h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 40px;
+            border-left: 8px solid #ffe603;
+            padding-left: 15px;
+        }
+
+        /* Contenedor de la lista vertical */
+        .lista-proveedores {
+            display: flex;
+            flex-direction: column;
+            gap: 40px; /* Espacio entre cada proveedor */
+            margin-bottom: 60px;
+        }
+
+        /* Fila del Proveedor Basada en Flexbox */
+        .proveedor-fila {
+            display: flex;
+            background-color: rgba(0, 0, 0, 0.75);
+            border: 1px solid #333;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .proveedor-fila:hover {
+            transform: scale(1.01);
+            box-shadow: 0 12px 25px rgba(255, 230, 3, 0.1);
+            border-color: #ffe603;
+        }
+
+        /* --- EFECTO ZIGZAG CON CSS --- */
+        .proveedor-fila:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        /* Contenedor de la Foto */
+        .proveedor-foto {
+            flex: 1;
+            min-width: 300px;
+            height: 250px;
+            background-color: #ffffff; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-right: 3px solid #ffe603;
+        }
+
+        /* Invertimos el borde en las filas impares del zigzag */
+        .proveedor-fila:nth-child(even) .proveedor-foto {
+            border-right: none;
+            border-left: 3px solid #ffe603;
+        }
+
+        .proveedor-foto img {
+            max-width: 85%;
+            max-height: 85%;
+            object-fit: contain;
+        }
+
+        /* Contenedor del Nombre e Info */
+        .proveedor-detalles {
+            flex: 1.5;
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .proveedor-nombre {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffe603; 
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .proveedor-categoria {
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            background-color: #222;
+            display: inline-block;
+            padding: 4px 10px;
+            align-self: flex-start;
+            border-radius: 2px;
+        }
+
+        .proveedor-descripcion {
+            color: #cccccc;
+            font-size: 1rem;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        /* --- RESPONSIVO PARA MÓVILES --- */
+        @media (max-width: 768px) {
+            .proveedor-fila, .proveedor-fila:nth-child(even) {
+                flex-direction: column; 
+            }
+            .proveedor-foto {
+                border-right: none !important;
+                border-left: none !important;
+                border-bottom: 3px solid #ffe603;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="marquesina">
+            <p>0901-26-18806 &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp; Diego Alessandro Quiñónez Pangán</p>
+        </div>
+
+        <nav>
+            <ul class="menu-principal">
+                <li class="menu-item">
+                    <a href="index.html" class="botones-redireccionales">Menú principal</a>
+                </li>
+                <li class="menu-item">
+                    <a href="QuienesSomos.html" class="botones-redireccionales">¿Quiénes Somos?</a>
+                </li>
+                <li class="menu-item">
+                    <a href="AcercaDe.html" class="botones-redireccionales">Acerca De</a>
+                </li>
+                <li class="menu-item">
+                    <a href="Producos.html" class="botones-redireccionales">Productos</a>
+                </li>
+                <li class="menu-item actual">
+                    <a href="Proveedores.html" class="botones-redireccionales">Proveedores</a>
+                </li>
+                <li class="menu-item">
+                    <a href="Clientes.html" class="botones-redireccionales">Clientes</a>
+                </li>
+                <li class="menu-item">
+                    <a href="Contactenos.html" class="botones-redireccionales">Contáctenos</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="seccion-proveedores">
+            <h2>Nuestros Proveedores Aliados</h2>
+            
+            <div class="lista-proveedores">
+                
+                <article class="proveedor-fila">
+                    <div class="proveedor-foto">
+                        <img src="Prov1.jpg" alt="Aceros Globales de Guatemala">
+                    </div>
+                    <div class="proveedor-detalles">
+                        <span class="proveedor-categoria">Hierro y Estructura</span>
+                        <h3 class="proveedor-nombre">Corporación Aceros Globales</h3>
+                        <p class="proveedor-descripcion">
+                            Líder regional en fundición y maquinado de acero corrugado de alta resistencia. Provee todas nuestras varillas legítimas de grado 40 y mallas electrosoldadas bajo rigurosas normas internacionales de sismorresistencia.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="proveedor-fila">
+                    <div class="proveedor-foto">
+                        <img src="Prov2.jpg" alt="Cementos del Norte">
+                    </div>
+                    <div class="proveedor-detalles">
+                        <span class="proveedor-categoria">Aglomerantes</span>
+                        <h3 class="proveedor-nombre">Cementos del Progreso Industrial</h3>
+                        <p class="proveedor-descripcion">
+                            Principal aliado en el suministro de cemento estructural tipo UGC y cal hidratada. Su cadena logística nos garantiza un stock constante de sacos frescos con un rendimiento óptimo de fraguado para grandes obras civiles.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="proveedor-fila">
+                    <div class="proveedor-foto">
+                        <img src="Prov3.png" alt="Lanco Química Internacional">
+                    </div>
+                    <div class="proveedor-detalles">
+                        <span class="proveedor-categoria">Acabados e Impermeabilizantes</span>
+                        <h3 class="proveedor-nombre">Lanco de Centroamérica</h3>
+                        <p class="proveedor-descripcion">
+                            Desarrollador de alta tecnología en recubrimientos selladores y sistemas impermeabilizantes. Su fórmula avanzada Siliconizer nos permite distribuir soluciones definitivas contra filtraciones y humedad extrema.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="proveedor-fila">
+                    <div class="proveedor-foto">
+                        <img src="Prov4.jpg" alt="Cerámicas Cosala S.A.">
+                    </div>
+                    <div class="proveedor-detalles">
+                        <span class="proveedor-categoria">Pisos y Acabados</span>
+                        <h3 class="proveedor-nombre">Alfarería y Cerámicas Cosala</h3>
+                        <p class="proveedor-descripcion">
+                            Fábrica especializada en pisos cerámicos y porcelanatos rectificados de tráfico pesado. Sus diseños simulan texturas naturales como madera haya y piedras volcánicas, aportando elegancia y alta resistencia al desgaste.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="proveedor-fila">
+                    <div class="proveedor-foto">
+                        <img src="prov5.jpg" alt="Tubex Sistemas de Fluidos">
+                    </div>
+                    <div class="proveedor-detalles">
+                        <span class="proveedor-categoria">Hidráulica y PVC</span>
+                        <h3 class="proveedor-nombre">Sistemas Hidráulicos Tubex</h3>
+                        <p class="proveedor-descripcion">
+                            Fabricante e inyector de polímeros termoplásticos de alta presión. Abastece toda nuestra línea de tuberías PVC de alto impacto aptas para distribución de agua potable y canalizaciones eléctricas embutidas seguras.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
